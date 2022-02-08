@@ -22,25 +22,37 @@ extension URLSession: URLRequestExecutor {
 }
 
 class APIClient {
-
+    
     var url: URL!
-   
+    
     private let session: URLRequestExecutor
     
     init(_ session: URLRequestExecutor = URLSession.shared) {
         self.session = session
     }
     
+    enum Error: Swift.Error {
+        case unauthorisedAccess
+        case clientError
+    }
+    
     func load(url imageURL: URL, completion: @escaping ((Error?) -> Void)) {
         self.url = imageURL
         self.session.dataTask(with: url) { (data, response, error) in
-            completion(error)
+            if let error =  error {
+                completion(Error.clientError)
+                return
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completion(Error.unauthorisedAccess)
+                return
+            }
         }
     }
 }
 
 class APIClientTests: XCTestCase {
-
+    
     func test_load_url() {
         let sut = client()
         let imageURL = URL(string: "https://a-given-url")!
@@ -50,41 +62,50 @@ class APIClientTests: XCTestCase {
     
     
     func test_loadUrlWhenNoConnectionThrowError() {
-        let sutError = NSError(domain: "Internet not available", code: 1)
+        let sutError = APIClient.Error.clientError
         let sut = client(error: sutError)
         let imageURL = URL(string: "https://a-given-url")!
         let exp = expectation(description: "API Calling")
         sut.load(url: imageURL) { (error) in
-            XCTAssertEqual(error! as NSError, sutError)
+            XCTAssertEqual(error, sutError)
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1)
     }
     
-    func client(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) ->  APIClient {
+    func test_loadUrlWhenAPIKeyMissingThenThrowServerError() {
+        let sutError = APIClient.Error.unauthorisedAccess
+        let imageURL = URL(string: "https://a-given-url")!
+        let response = HTTPURLResponse(url: imageURL, statusCode: 401, httpVersion: nil, headerFields: nil)
+        let sut = client(response: response)
+        let exp = expectation(description: "API Calling")
+        sut.load(url: imageURL) { (error) in
+            XCTAssertEqual(error, sutError)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+    }
+    
+    private func client(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) ->  APIClient {
         let sesion = MockRequestExcecutor(data:data, response:response, error:error)
         let sut = APIClient(sesion)
         return sut;
     }
-   
     
-    class MockRequestExcecutor: URLRequestExecutor {
+    
+    private class MockRequestExcecutor: URLRequestExecutor {
         private var data: Data?
         private var response: URLResponse?
         private var error: Error?
         
-        init(data: Data?, response: URLResponse?, error: Error?) {
+        fileprivate init(data: Data?, response: URLResponse?, error: Error?) {
             self.data = data
             self.response = response
             self.error = error
         }
         
         func dataTask(with url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask? {
-            if let data = data {
-                completion(data, response, nil)
-            } else {
-                completion(nil,nil,error)
-            }
+            completion(data,response,error)
             return nil
         }
     }
