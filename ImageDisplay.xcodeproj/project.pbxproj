@@ -10,6 +10,7 @@
 		18B80E6627B156F200A804E3 /* ImageDisplay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B80E5C27B156F200A804E3 /* ImageDisplay.framework */; };
 		18B80E6B27B156F200A804E3 /* ImageDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */; };
 		18B80E6D27B156F200A804E3 /* ImageDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B80E5F27B156F200A804E3 /* ImageDisplay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		18B80E7A27B29B1400A804E3 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B80E7927B29B1400A804E3 /* APIClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		18B80E6527B156F200A804E3 /* ImageDisplayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageDisplayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDisplayTests.swift; sourceTree = "<group>"; };
 		18B80E6C27B156F200A804E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		18B80E7927B29B1400A804E3 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +82,19 @@
 		18B80E6927B156F200A804E3 /* ImageDisplayTests */ = {
 			isa = PBXGroup;
 			children = (
+				18B80E7827B29AE700A804E3 /* API Client */,
 				18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */,
 				18B80E6C27B156F200A804E3 /* Info.plist */,
 			);
 			path = ImageDisplayTests;
+			sourceTree = "<group>";
+		};
+		18B80E7827B29AE700A804E3 /* API Client */ = {
+			isa = PBXGroup;
+			children = (
+				18B80E7927B29B1400A804E3 /* APIClient.swift */,
+			);
+			path = "API Client";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B80E6B27B156F200A804E3 /* ImageDisplayTests.swift in Sources */,
+				18B80E7A27B29B1400A804E3 /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
