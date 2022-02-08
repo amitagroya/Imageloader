@@ -10,11 +10,11 @@ import XCTest
 
 protocol URLRequestExecutor {
     @discardableResult
-    func execute(with url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask?
+    func dataTask(with url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask?
 }
 
 extension URLSession: URLRequestExecutor {
-    func execute(with url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask? {
+    func dataTask(with url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask? {
         let task = self.dataTask(with: url, completionHandler: completion)
         task.resume()
         return task
@@ -33,7 +33,7 @@ class APIClient {
     
     func load(url imageURL: URL, completion: @escaping ((Error?) -> Void)) {
         self.url = imageURL
-        self.session.execute(with: url) { (data, response, error) in
+        self.session.dataTask(with: url) { (data, response, error) in
             completion(error)
         }
     }
@@ -55,7 +55,7 @@ class APIClientTests: XCTestCase {
         let imageURL = URL(string: "https://a-given-url")!
         let exp = expectation(description: "API Calling")
         sut.load(url: imageURL) { (error) in
-            XCTAssertEqual(error as! NSError, sutError)
+            XCTAssertEqual(error! as NSError, sutError)
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1)
@@ -79,7 +79,7 @@ class APIClientTests: XCTestCase {
             self.error = error
         }
         
-        func execute(with url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask? {
+        func dataTask(with url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionTask? {
             if let data = data {
                 completion(data, response, nil)
             } else {
