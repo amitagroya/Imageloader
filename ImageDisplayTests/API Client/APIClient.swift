@@ -35,18 +35,23 @@ class APIClient {
         case unauthorisedAccess
         case clientError
     }
+    enum APIResult {
+        case success(Data?, HTTPURLResponse)
+        case failure(Error)
+    }
     
-    func load(url imageURL: URL, completion: @escaping ((Error?) -> Void)) {
+    func load(url imageURL: URL, completion: @escaping ((APIResult) -> Void)) {
         self.url = imageURL
         self.session.dataTask(with: url) { (data, response, error) in
-            if let error =  error {
-                completion(Error.clientError)
+            if error != nil {
+                completion(.failure(.clientError))
                 return
             }
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completion(Error.unauthorisedAccess)
+                completion(.failure(.unauthorisedAccess))
                 return
             }
+            completion(.success(data, response))
         }
     }
 }
@@ -63,28 +68,31 @@ class APIClientTests: XCTestCase {
     
     func test_loadUrlWhenNoConnectionThrowError() {
         let sutError = APIClient.Error.clientError
-        let sut = client(error: sutError)
-        let imageURL = URL(string: "https://a-given-url")!
-        let exp = expectation(description: "API Calling")
-        sut.load(url: imageURL) { (error) in
-            XCTAssertEqual(error, sutError)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1)
+
+        let reslutError = expectErrorResult(data: nil, response: nil, error: sutError)
+        
+        XCTAssertEqual(reslutError as! APIClient.Error, sutError)
     }
     
     func test_loadUrlWhenAPIKeyMissingThenThrowServerError() {
         let sutError = APIClient.Error.unauthorisedAccess
-        let imageURL = URL(string: "https://a-given-url")!
-        let response = HTTPURLResponse(url: imageURL, statusCode: 401, httpVersion: nil, headerFields: nil)
-        let sut = client(response: response)
-        let exp = expectation(description: "API Calling")
-        sut.load(url: imageURL) { (error) in
-            XCTAssertEqual(error, sutError)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1)
+
+        let response = HTTPURLResponse(url: getImageURL(), statusCode: 401, httpVersion: nil, headerFields: nil)
+        let reslutError = expectErrorResult(data: nil, response: response, error: nil)
+        
+        XCTAssertEqual(reslutError as! APIClient.Error, sutError)
+
     }
+    
+    func test_load_urlWhenServerResponsedAndBlankArray() {
+        let response = HTTPURLResponse(url: getImageURL(), statusCode: 200, httpVersion: nil, headerFields: nil)
+        let data = Data()
+        let result = expectResult(data: data, response: response, error: nil)
+        XCTAssertEqual(result?.data, data)
+        XCTAssertEqual(result?.response.url, response?.url)
+        XCTAssertEqual(result?.response.statusCode, response?.statusCode)
+    }
+    
     
     private func client(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) ->  APIClient {
         let sesion = MockRequestExcecutor(data:data, response:response, error:error)
@@ -92,6 +100,45 @@ class APIClientTests: XCTestCase {
         return sut;
     }
     
+    private func expectErrorResult(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) -> Error? {
+        let result = expect(data: data, response: response, error: error)
+            switch result {
+            case .failure(let expectedError):
+               return expectedError
+            default:
+                XCTFail("Expecting error response instead")
+            }
+
+        return nil
+    }
+    
+    private func expectResult(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) -> (data: Data?, response: HTTPURLResponse)? {
+        let result = expect(data: data, response: response, error: error)
+            switch result {
+            case let .success(data, response):
+               return (data, response)
+            default:
+                XCTFail("Expecting error response instead")
+            }
+        return nil
+    }
+
+    private func expect(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) -> APIClient.APIResult? {
+        let sut = client(data: data, response: response, error: error)
+        let imageURL = getImageURL()
+        let exp = expectation(description: "API Calling")
+        var result: APIClient.APIResult?
+        sut.load(url: imageURL) { (expectedResult) in
+            result = expectedResult
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+        return result
+    }
+    
+    private func getImageURL() -> URL {
+        return URL(string: "https://a-given-url")!
+    }
     
     private class MockRequestExcecutor: URLRequestExecutor {
         private var data: Data?
