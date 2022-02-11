@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1808404E27B68F4D00925103 /* ImageListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1808404D27B68F4D00925103 /* ImageListModel.swift */; };
 		18B80E6627B156F200A804E3 /* ImageDisplay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B80E5C27B156F200A804E3 /* ImageDisplay.framework */; };
 		18B80E6B27B156F200A804E3 /* ImageDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */; };
 		18B80E6D27B156F200A804E3 /* ImageDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B80E5F27B156F200A804E3 /* ImageDisplay.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +25,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1808404D27B68F4D00925103 /* ImageListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListModel.swift; sourceTree = "<group>"; };
 		18B80E5C27B156F200A804E3 /* ImageDisplay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ImageDisplay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B80E5F27B156F200A804E3 /* ImageDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageDisplay.h; sourceTree = "<group>"; };
 		18B80E6027B156F200A804E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				18B80E5F27B156F200A804E3 /* ImageDisplay.h */,
+				1808404D27B68F4D00925103 /* ImageListModel.swift */,
 				18B80E6027B156F200A804E3 /* Info.plist */,
 			);
 			path = ImageDisplay;
@@ -158,6 +161,7 @@
 				TargetAttributes = {
 					18B80E5B27B156F100A804E3 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 					18B80E6427B156F200A804E3 = {
 						CreatedOnToolsVersion = 12.3;
@@ -205,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1808404E27B68F4D00925103 /* ImageListModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +357,7 @@
 		18B80E7127B156F200A804E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -368,6 +374,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = parthyan.ImageDisplay;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -375,6 +382,7 @@
 		18B80E7227B156F200A804E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
@@ -398,6 +406,7 @@
 		18B80E7427B156F200A804E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ImageDisplayTests/Info.plist;
@@ -415,6 +424,7 @@
 		18B80E7527B156F200A804E3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = ImageDisplayTests/Info.plist;

@@ -93,7 +93,6 @@ class APIClientTests: XCTestCase {
         XCTAssertEqual(result?.response.statusCode, response?.statusCode)
     }
     
-    
     private func client(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) ->  APIClient {
         let sesion = MockRequestExcecutor(data:data, response:response, error:error)
         let sut = APIClient(sesion)
