@@ -93,6 +93,15 @@ class APIClientTests: XCTestCase {
         XCTAssertEqual(result?.response.statusCode, response?.statusCode)
     }
     
+    func test_load_urlWhenServerResponsedWithImageArray() {
+        let response = HTTPURLResponse(url: getImageURL(), statusCode: 200, httpVersion: nil, headerFields: nil)
+        let data = readJsonFile(name: "CapturedImages")
+        let result = expectResult(data: data, response: response, error: nil)
+        XCTAssertEqual(result?.data, data)
+        XCTAssertEqual(result?.response.url, response?.url)
+        XCTAssertEqual(result?.response.statusCode, response?.statusCode)
+    }
+    
     private func client(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) ->  APIClient {
         let sesion = MockRequestExcecutor(data:data, response:response, error:error)
         let sut = APIClient(sesion)
@@ -137,6 +146,14 @@ class APIClientTests: XCTestCase {
     
     private func getImageURL() -> URL {
         return URL(string: "https://a-given-url")!
+    }
+    
+    private func readJsonFile(name: String) -> Data {
+        let bundle = Bundle(for: APIClient.self)
+        guard let path = bundle.path(forResource: name, ofType: ".json") else {
+            fatalError("File path not found")
+        }
+        return try! Data(contentsOf: URL(fileURLWithPath: path))
     }
     
     private class MockRequestExcecutor: URLRequestExecutor {

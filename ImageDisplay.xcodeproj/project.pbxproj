@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1808404E27B68F4D00925103 /* ImageListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1808404D27B68F4D00925103 /* ImageListModel.swift */; };
+		1808405327B690C700925103 /* CapturedImages.json in Resources */ = {isa = PBXBuildFile; fileRef = 1808405227B690C700925103 /* CapturedImages.json */; };
 		18B80E6627B156F200A804E3 /* ImageDisplay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B80E5C27B156F200A804E3 /* ImageDisplay.framework */; };
 		18B80E6B27B156F200A804E3 /* ImageDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */; };
 		18B80E6D27B156F200A804E3 /* ImageDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B80E5F27B156F200A804E3 /* ImageDisplay.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +27,8 @@
 
 /* Begin PBXFileReference section */
 		1808404D27B68F4D00925103 /* ImageListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListModel.swift; sourceTree = "<group>"; };
+		1808405227B690C700925103 /* CapturedImages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CapturedImages.json; sourceTree = "<group>"; };
+		1808405827B693BB00925103 /* ImageBehaviour.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ImageBehaviour.png; sourceTree = "<group>"; };
 		18B80E5C27B156F200A804E3 /* ImageDisplay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ImageDisplay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18B80E5F27B156F200A804E3 /* ImageDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageDisplay.h; sourceTree = "<group>"; };
 		18B80E6027B156F200A804E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,9 +57,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1808405127B690A600925103 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				1808405227B690C700925103 /* CapturedImages.json */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 		18B80E5227B156F100A804E3 = {
 			isa = PBXGroup;
 			children = (
+				1808405827B693BB00925103 /* ImageBehaviour.png */,
 				18B80E5E27B156F200A804E3 /* ImageDisplay */,
 				18B80E6927B156F200A804E3 /* ImageDisplayTests */,
 				18B80E5D27B156F200A804E3 /* Products */,
@@ -85,6 +97,7 @@
 		18B80E6927B156F200A804E3 /* ImageDisplayTests */ = {
 			isa = PBXGroup;
 			children = (
+				1808405127B690A600925103 /* Assets */,
 				18B80E7827B29AE700A804E3 /* API Client */,
 				18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */,
 				18B80E6C27B156F200A804E3 /* Info.plist */,
@@ -199,6 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1808405327B690C700925103 /* CapturedImages.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
