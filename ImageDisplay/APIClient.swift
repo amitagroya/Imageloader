@@ -20,9 +20,15 @@ extension URLSession: URLRequestExecutor {
     }
 }
 
+public enum APIError: Error {
+    case unauthorisedAccess
+    case clientError
+}
+
+
 public enum APIResult {
     case success(Data?, HTTPURLResponse)
-    case failure(Error)
+    case failure(APIError)
 }
 
 public protocol HTTPClient {
@@ -36,19 +42,15 @@ public class APIClient: HTTPClient {
         self.session = session
     }
     
-    public enum Error: Swift.Error {
-        case unauthorisedAccess
-        case clientError
-    }
-    
+
     public func load(url imageURL: URL, completion: @escaping ((APIResult) -> Void)) {
         self.session.dataTask(with: imageURL) { (data, response, error) in
             if error != nil {
-                completion(.failure(Error.clientError))
+                completion(.failure(APIError.clientError))
                 return
             }
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completion(.failure(Error.unauthorisedAccess))
+                completion(.failure(APIError.unauthorisedAccess))
                 return
             }
             completion(.success(data, response))

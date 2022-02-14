@@ -11,20 +11,20 @@ import ImageDisplay
 
 class APIClientTests: XCTestCase {
     func test_loadUrlWhenNoConnectionThrowError() {
-        let sutError = APIClient.Error.clientError
+        let sutError = APIError.clientError
 
         let reslutError = expectErrorResult(data: nil, response: nil, error: sutError)
         
-        XCTAssertEqual(reslutError as! APIClient.Error, sutError)
+        XCTAssertEqual(reslutError as! APIError, sutError)
     }
     
     func test_loadUrlWhenAPIKeyMissingThenThrowServerError() {
-        let sutError = APIClient.Error.unauthorisedAccess
+        let sutError = APIError.unauthorisedAccess
 
         let response = HTTPURLResponse(url: getImageURL(), statusCode: 401, httpVersion: nil, headerFields: nil)
         let reslutError = expectErrorResult(data: nil, response: response, error: nil)
         
-        XCTAssertEqual(reslutError as! APIClient.Error, sutError)
+        XCTAssertEqual(reslutError as! APIError, sutError)
 
     }
     
@@ -77,11 +77,11 @@ class APIClientTests: XCTestCase {
         return nil
     }
 
-    private func expect(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) -> APIClient.APIResult? {
+    private func expect(data: Data? = nil, response: URLResponse? = nil, error: Error? = nil) -> APIResult? {
         let sut = client(data: data, response: response, error: error)
         let imageURL = getImageURL()
         let exp = expectation(description: "API Calling")
-        var result: APIClient.APIResult?
+        var result: APIResult?
         sut.load(url: imageURL) { (expectedResult) in
             result = expectedResult
             exp.fulfill()
@@ -92,14 +92,6 @@ class APIClientTests: XCTestCase {
     
     private func getImageURL() -> URL {
         return URL(string: "https://a-given-url")!
-    }
-    
-    private func readJsonFile(name: String) -> Data {
-        let bundle = Bundle(for: APIClientTests.self)
-        guard let path = bundle.path(forResource: name, ofType: ".json") else {
-            fatalError("File path not found")
-        }
-        return try! Data(contentsOf: URL(fileURLWithPath: path))
     }
     
     private class MockRequestExcecutor: URLRequestExecutor {
@@ -117,5 +109,15 @@ class APIClientTests: XCTestCase {
             completion(data,response,error)
             return nil
         }
+    }
+}
+
+extension XCTestCase {
+    public func readJsonFile(name: String) -> Data {
+        let bundle = Bundle(for: APIClientTests.self)
+        guard let path = bundle.path(forResource: name, ofType: ".json") else {
+            fatalError("File path not found")
+        }
+        return try! Data(contentsOf: URL(fileURLWithPath: path))
     }
 }

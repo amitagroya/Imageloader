@@ -9,8 +9,8 @@ import Foundation
 
 // MARK: - ImageListModel
 public struct ImageListModel: Codable {
-    let total, totalImages: Int
-    let images: [ImageModel]
+    public let total, totalImages: Int
+    public let images: [ImageModel]
     
     enum CodingKeys: String, CodingKey {
         case total
@@ -20,21 +20,21 @@ public struct ImageListModel: Codable {
 }
 
 // MARK: - Hit
-struct ImageModel: Codable {
-    let id: Int
-    let pageURL: String
-    let type: TypeEnum
-    let tags: String
-    let previewURL: String
-    let previewWidth, previewHeight: Int
-    let webformatURL: String
-    let webformatWidth, webformatHeight: Int
-    let largeImageURL: String
-    let imageWidth, imageHeight, imageSize, views: Int
-    let downloads, collections, likes, comments: Int
-    let userID: Int
-    let user: String
-    let userImageURL: String
+public struct ImageModel: Codable {
+    public let id: Int
+    public let pageURL: String
+    public let type: TypeEnum
+    public let tags: String
+    public let previewURL: String
+    public let previewWidth, previewHeight: Int
+    public let webformatURL: String
+    public let webformatWidth, webformatHeight: Int
+    public let largeImageURL: String
+    public let imageWidth, imageHeight, imageSize, views: Int
+    public let downloads, collections, likes, comments: Int
+    public let userID: Int
+    public let user: String
+    public let userImageURL: String
 
     enum CodingKeys: String, CodingKey {
         case id, pageURL, type, tags, previewURL, previewWidth, previewHeight, webformatURL, webformatWidth, webformatHeight, largeImageURL, imageWidth, imageHeight, imageSize, views, downloads, collections, likes, comments
@@ -43,7 +43,7 @@ struct ImageModel: Codable {
     }
 }
 
-enum TypeEnum: String, Codable {
+public enum TypeEnum: String, Codable {
     case photo = "photo"
 }
 

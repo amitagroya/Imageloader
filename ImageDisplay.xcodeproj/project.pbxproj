@@ -16,6 +16,7 @@
 		18B80E6B27B156F200A804E3 /* ImageDisplayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */; };
 		18B80E6D27B156F200A804E3 /* ImageDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = 18B80E5F27B156F200A804E3 /* ImageDisplay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		18B80E7A27B29B1400A804E3 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B80E7927B29B1400A804E3 /* APIClientTests.swift */; };
+		8237F7D527BA8E8000CC3446 /* ImageLoaderImplment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8237F7D427BA8E8000CC3446 /* ImageLoaderImplment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		18B80E6A27B156F200A804E3 /* ImageDisplayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDisplayTests.swift; sourceTree = "<group>"; };
 		18B80E6C27B156F200A804E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18B80E7927B29B1400A804E3 /* APIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientTests.swift; sourceTree = "<group>"; };
+		8237F7D427BA8E8000CC3446 /* ImageLoaderImplment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoaderImplment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				1808405927B6943800925103 /* ImageLoader.swift */,
 				1808406327B694B600925103 /* APIClient.swift */,
 				18B80E6027B156F200A804E3 /* Info.plist */,
+				8237F7D427BA8E8000CC3446 /* ImageLoaderImplment.swift */,
 			);
 			path = ImageDisplay;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8237F7D527BA8E8000CC3446 /* ImageLoaderImplment.swift in Sources */,
 				1808405A27B6943800925103 /* ImageLoader.swift in Sources */,
 				1808404E27B68F4D00925103 /* ImageListModel.swift in Sources */,
 				1808406427B694B600925103 /* APIClient.swift in Sources */,
