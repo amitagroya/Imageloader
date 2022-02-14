@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - ImageListModel
-struct ImageListModel: Codable {
+public struct ImageListModel: Codable {
     let total, totalImages: Int
     let images: [ImageModel]
     

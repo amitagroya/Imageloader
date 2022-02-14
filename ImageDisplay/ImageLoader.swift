@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ImageLoader {
+public protocol ImageLoader {
     
 }

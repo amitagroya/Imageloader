@@ -20,7 +20,16 @@ extension URLSession: URLRequestExecutor {
     }
 }
 
-public class APIClient {
+public enum APIResult {
+    case success(Data?, HTTPURLResponse)
+    case failure(Error)
+}
+
+public protocol HTTPClient {
+    func load(url imageURL: URL, completion: @escaping ((APIResult) -> Void))
+}
+
+public class APIClient: HTTPClient {
     private let session: URLRequestExecutor
     
     public init(_ session: URLRequestExecutor = URLSession.shared) {
@@ -31,19 +40,15 @@ public class APIClient {
         case unauthorisedAccess
         case clientError
     }
-    public enum APIResult {
-        case success(Data?, HTTPURLResponse)
-        case failure(Error)
-    }
     
     public func load(url imageURL: URL, completion: @escaping ((APIResult) -> Void)) {
         self.session.dataTask(with: imageURL) { (data, response, error) in
             if error != nil {
-                completion(.failure(.clientError))
+                completion(.failure(Error.clientError))
                 return
             }
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completion(.failure(.unauthorisedAccess))
+                completion(.failure(Error.unauthorisedAccess))
                 return
             }
             completion(.success(data, response))
